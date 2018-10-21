@@ -8,6 +8,9 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Properties;
 
+/**
+ * 获取Excel中的数据集的工厂
+ */
 public class MultiSchemaXlsDataSetFactory implements DataSetFactory {
 
 	protected String defaultSchemaName;

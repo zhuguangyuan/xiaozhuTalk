@@ -28,8 +28,8 @@ public class TopicDaoTest extends BaseDaoTest {
 			User user = new User();
 			user.setUserId(1);
 			topic.setUser(user);
-			System.out.println("=============创建时间:" + topic + "\n\n");
+			System.out.println("=============创建时间:" + topic.getCreateTime() + "");
 	    	topicDao.save(topic);
-	    }
+		}
 	}
 }

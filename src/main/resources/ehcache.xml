@@ -44,7 +44,9 @@
 		overflowToDisk="false" timeToIdleSeconds="0" timeToLiveSeconds="0"
 		diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
 
+	<!--存放Board的缓冲区-->
 	<cache name="fixedRegion" maxElementsInMemory="100" eternal="true" overflowToDisk="false"/>
+	<!--存放Topic/Post/User的缓冲区-->
 	<cache name="freqChangeRegion" maxElementsInMemory="5000" eternal="false"
 		overflowToDisk="true" timeToIdleSeconds="300" timeToLiveSeconds="1800"/>
 	

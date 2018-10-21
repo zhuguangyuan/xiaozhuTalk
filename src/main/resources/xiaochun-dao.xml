@@ -32,6 +32,7 @@
 					org.hibernate.dialect.MySQLDialect
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
+				<!--使用hibernate二级缓存,采用EHCache缓存实现方法,EHCache的具体配置在ehcache.xml文件下-->
 				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.region.factory_class">
 					org.hibernate.cache.ehcache.EhCacheRegionFactory

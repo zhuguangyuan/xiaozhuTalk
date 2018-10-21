@@ -14,6 +14,10 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+
+/**
+ * Excel数据集读取器
+ */
 public class MultiSchemaXlsDataSetReader {
 	private String defaultSchemaName;
 	

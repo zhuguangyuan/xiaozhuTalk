@@ -28,6 +28,19 @@ public class BaseDao<T>{
 		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 		entityClass = (Class) params[0];
 	}
+	public HibernateTemplate getHibernateTemplate() {
+		return hibernateTemplate;
+	}
+
+	@Autowired
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate = hibernateTemplate;
+	}
+
+	public  Session getSession() {
+		return hibernateTemplate.getSessionFactory().getCurrentSession();
+	}
+
 
 
 
@@ -94,6 +107,13 @@ public class BaseDao<T>{
 	public void update(T entity) {
 		getHibernateTemplate().update(entity);
 	}
+
+
+
+
+
+
+
 
 	/**
 	 * 执行HQL查询
@@ -200,17 +220,4 @@ public class BaseDao<T>{
 		m.appendTail(sb);
 		return sb.toString();
 	}
-
-	public HibernateTemplate getHibernateTemplate() {
-		return hibernateTemplate;
-	}
-
-	@Autowired
-	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-		this.hibernateTemplate = hibernateTemplate;
-	}
-    public  Session getSession() {
-        return hibernateTemplate.getSessionFactory().getCurrentSession();
-    }
-	
 }

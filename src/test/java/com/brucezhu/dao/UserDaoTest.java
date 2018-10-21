@@ -18,7 +18,7 @@ public class UserDaoTest extends BaseDaoTest {
 	private UserDao userDao;
 
 
-	@Test
+//	@Test
 	@DataSet("XiaoChun.Users.xls")//准备数据
 	public void findUserByUserName() {
 		User user = userDao.getUserByUserName("tony");
@@ -31,7 +31,7 @@ public class UserDaoTest extends BaseDaoTest {
 	}
 
 	// 验证数据库保存的正确性
-	@Test
+//	@Test
 	@DataSet("XiaoChun.SaveUser.xls")
 	@ExpectedDataSet("XiaoChun.ExpectedSaveUser.xls")// 准备验证数据
 	public void saveUser()throws Exception  {
@@ -40,8 +40,8 @@ public class UserDaoTest extends BaseDaoTest {
 	}
 	
 	//验证数据库保存的正确性
-	//@Test
-	//@ExpectedDataSet("XiaoChun.ExpectedSaveUsers.xls")// 准备验证数据
+	@Test
+	@ExpectedDataSet("XiaoChun.ExpectedSaveUsers.xls")// 准备验证数据
 	public void saveUsers()throws Exception  {
 		List<User> users  = XlsDataSetBeanFactory.createBeans(UserDaoTest.class,"XiaoChun.SaveUsers.xls", "t_user", User.class);
 		for(User u:users){
