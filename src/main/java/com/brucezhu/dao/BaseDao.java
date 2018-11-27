@@ -14,12 +14,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 数据访问对象基类
  * DAO基类，其它DAO可以直接继承这个DAO，不但可以复用共用的方法，还可以获得泛型的好处。
  */
 public class BaseDao<T>{
-	private Class<T> entityClass;
 
+	private Class<T> entityClass;
 	private HibernateTemplate hibernateTemplate;
+
 	/**
 	 * 通过反射获取子类确定的泛型类
 	 */
@@ -28,54 +30,49 @@ public class BaseDao<T>{
 		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 		entityClass = (Class) params[0];
 	}
+
+	/**
+	 * 获取hibernateTemplate
+	 * @return
+	 */
 	public HibernateTemplate getHibernateTemplate() {
 		return hibernateTemplate;
 	}
 
+	/**
+	 * 设置hibernateTemplate
+	 * @param hibernateTemplate
+	 */
 	@Autowired
 	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
 		this.hibernateTemplate = hibernateTemplate;
 	}
 
+	/**
+	 * 获取当前Session
+	 * @return
+	 */
 	public  Session getSession() {
 		return hibernateTemplate.getSessionFactory().getCurrentSession();
 	}
 
-
-
-
 	/**
-	 * 根据ID加载PO实例
-	 * 
-	 * @param id
-	 * @return 返回相应的持久化PO实例
+	 * 对延迟加载的实体PO执行初始化
+	 * @param entity
 	 */
-	public T load(Serializable id) {
-		return (T) getHibernateTemplate().load(entityClass, id);
+	public void initialize(Object entity) {
+		this.getHibernateTemplate().initialize(entity);
 	}
 
-	/**
-	 * 根据ID获取PO实例
-	 * 
-	 * @param id
-	 * @return 返回相应的持久化PO实例
-	 */
-	public T get(Serializable id) {
-		return (T) getHibernateTemplate().get(entityClass, id);
-	}
+
 
 	/**
-	 * 获取PO的所有对象
-	 * 
-	 * @return
+	 * **********************************************************************************************
+	 * 基本的增删改查
+	 * **********************************************************************************************
 	 */
-	public List<T> loadAll() {
-		return getHibernateTemplate().loadAll(entityClass);
-	}
-	
 	/**
-	 * 保存PO
-	 * 
+	 * 增
 	 * @param entity
 	 */
 	public void save(T entity) {
@@ -83,8 +80,7 @@ public class BaseDao<T>{
 	}
 
 	/**
-	 * 删除PO
-	 * 
+	 * 删
 	 * @param entity
 	 */
 	public void remove(T entity) {
@@ -92,33 +88,53 @@ public class BaseDao<T>{
 	}
 
 	/**
-	 * 删除tableNames数据
-	 *
+	 * 删
 	 */
 	public void removeAll(String tableName) {
 		getSession().createSQLQuery("truncate TABLE " + tableName +"").executeUpdate();
 	}
 
 	/**
-	 * 更改PO
-	 * 
+	 * 改
 	 * @param entity
 	 */
 	public void update(T entity) {
 		getHibernateTemplate().update(entity);
 	}
 
+	/**
+	 * 查询1
+	 */
+	public T get(Serializable id) {
+		return (T) getHibernateTemplate().get(entityClass, id);
+	}
 
+	/**
+	 * 查询2
+	 */
+	public T load(Serializable id) {
+		return (T) getHibernateTemplate().load(entityClass, id);
+	}
 
-
+	/**
+	 * 查询3
+	 */
+	public List<T> loadAll() {
+		return getHibernateTemplate().loadAll(entityClass);
+	}
 
 
 
 
 	/**
+	 * **********************************************************************************************
+	 * hql的查询/分页查询
+	 * **********************************************************************************************
+	 */
+	/**
 	 * 执行HQL查询
 	 * 
-	 * @param sql
+	 * @param hql
 	 * @return 查询结果
 	 */
 	public List find(String hql) {
@@ -128,7 +144,7 @@ public class BaseDao<T>{
 	/**
 	 * 执行带参的HQL查询
 	 * 
-	 * @param sql
+	 * @param hql
 	 * @param params
 	 * @return 查询结果
 	 */
@@ -136,14 +152,7 @@ public class BaseDao<T>{
 		return this.getHibernateTemplate().find(hql,params);
 	}
     
-	/**
-	 * 对延迟加载的实体PO执行初始化
-	 * @param entity
-	 */
-	public void initialize(Object entity) {
-		this.getHibernateTemplate().initialize(entity);
-	}
-	
+
 	
 	/**
 	 * 分页查询函数，使用hql.
@@ -158,8 +167,9 @@ public class BaseDao<T>{
 		List countlist = getHibernateTemplate().find(countQueryString, values);
 		long totalCount = (Long) countlist.get(0);
 
-		if (totalCount < 1)
+		if (totalCount < 1){
 			return new Page();
+		}
 		// 实际查询返回分页对象
 		int startIndex = Page.getStartOfPage(pageNo, pageSize);
 		Query query = createQuery(hql, values);

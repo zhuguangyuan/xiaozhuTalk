@@ -6,7 +6,7 @@
     <groupId>com.brucezhu</groupId>
     <artifactId>xiaozhuTalk</artifactId>
     <version>1.0</version>
-    <name>Spring4.x第十八章实例</name>
+    <name>小猪论坛</name>
 
     <dependencies>
         <dependency>

@@ -11,11 +11,12 @@ import com.brucezhu.domain.Topic;
 @Repository
 public class TopicDao extends BaseDao<Topic> {
 	
-	private static final String GET_BOARD_DIGEST_TOPICS = "from Topic t where t.boardId = ? and digest > 0 order by t.lastPost desc,digest desc";
-	
-	private static final String GET_PAGED_TOPICS = "from Topic where boardId = ? order by lastPost desc";
-	
-	private static final String QUERY_TOPIC_BY_TITILE = "from Topic  where topicTitle like ? order by lastPost desc";
+	private static final String GET_BOARD_DIGEST_TOPICS =
+			"from Topic t where t.boardId = ? and digest > 0 order by t.lastPost desc,digest desc";
+	private static final String GET_PAGED_TOPICS =
+			"from Topic where boardId = ? order by lastPost desc";
+	private static final String QUERY_TOPIC_BY_TITILE =
+			"from Topic  where topicTitle like ? order by lastPost desc";
 
 	/**
 	 * 获取论坛版块某一页的精华主题帖，按最后回复时间以及精华级别 降序排列

@@ -9,9 +9,11 @@ import com.brucezhu.domain.User;
  */
 @Repository
 public class UserDao extends BaseDao<User> {
-	private static final String GET_USER_BY_USERNAME = "from User u where u.userName = ?";
-	
-	private static final String QUERY_USER_BY_USERNAME = "from User u where u.userName like ?";
+
+	private static final String GET_USER_BY_USERNAME =
+			"from User u where u.userName = ?";
+	private static final String QUERY_USER_BY_USERNAME =
+			"from User u where u.userName like ?";
 	
     /**
      * 根据用户名查询User对象
@@ -35,5 +37,4 @@ public class UserDao extends BaseDao<User> {
 	public List<User> queryUserByUserName(String userName){
 	    return (List<User>)getHibernateTemplate().find(QUERY_USER_BY_USERNAME,userName+"%");
 	}
-
 }
