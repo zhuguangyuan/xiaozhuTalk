@@ -63,6 +63,7 @@ public class User extends BaseDomain {
 
 	private int credit;
 
+	// 该user管理的boards
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "t_board_manager", joinColumns = {@JoinColumn(name ="user_id" )}, inverseJoinColumns = {@JoinColumn(name = "board_id") })
 	private Set<Board> manBoards = new HashSet<Board>();

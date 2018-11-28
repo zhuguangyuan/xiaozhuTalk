@@ -23,7 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
- *   这个Action负责处理论坛普通操作功能的请求，包括：显示论坛版块列表、显示论坛版块主题列表、
+ * 这个Action负责处理论坛普通操作功能的请求，
+ * 包括：显示论坛版块列表、显示论坛版块主题列表、
  * 表主题帖、回复帖子、删除帖子、设置精华帖子等操作。
  */
 @Controller
@@ -38,7 +39,6 @@ public class BoardManageController extends BaseController {
 
 	/**
 	 * 列出论坛模块下的主题帖子
-	 * 
 	 * @param boardId
 	 * @return
 	 */
@@ -57,7 +57,6 @@ public class BoardManageController extends BaseController {
 
 	/**
 	 * 添加主题帖页面
-	 * 
 	 * @param boardId
 	 * @return
 	 */
@@ -71,7 +70,6 @@ public class BoardManageController extends BaseController {
 
 	/**
 	 * 添加一个主题帖
-	 * 
 	 * @param request
 	 * @param topic
 	 * @return
@@ -91,7 +89,6 @@ public class BoardManageController extends BaseController {
 
 	/**
 	 * 列出主题的所有帖子
-	 * 
 	 * @param topicId
 	 * @return
 	 */
@@ -111,7 +108,6 @@ public class BoardManageController extends BaseController {
 
 	/**
 	 * 回复主题
-	 * 
 	 * @param request
 	 * @param post
 	 * @return
@@ -129,19 +125,6 @@ public class BoardManageController extends BaseController {
 		forumService.addPost(post);
 		String targetUrl = "/board/listTopicPosts-"
 				+ post.getTopic().getTopicId() + ".html";
-		return "redirect:"+targetUrl;
-	}
-
-	/**
-	 * 删除版块
-	 */
-	@RequestMapping(value = "/board/removeBoard", method = RequestMethod.GET)
-	public String removeBoard(@RequestParam("boardIds") String boardIds) {
-		String[] arrIds = boardIds.split(",");
-		for (int i = 0; i < arrIds.length; i++) {
-			forumService.removeBoard(new Integer(arrIds[i]));
-		}
-		String targetUrl = "/index.html";
 		return "redirect:"+targetUrl;
 	}
 

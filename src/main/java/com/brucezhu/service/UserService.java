@@ -123,5 +123,4 @@ public class UserService {
         userDao.update(user);
         loginLogDao.save(loginLog);
 	}	
-	
 }

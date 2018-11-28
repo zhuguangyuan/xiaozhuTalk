@@ -13,14 +13,19 @@ import org.apache.commons.lang.StringUtils;
 import static com.brucezhu.cons.CommonConstant.*;
 import com.brucezhu.domain.User;
 
+/**
+ * 过滤需要登录才能访问的URI请求
+ * 并将此请求跳转到登录界面
+ */
 public class ForumFilter implements Filter {
 	private static final String FILTERED_REQUEST = "@@session_context_filtered_request";
 
 	// ① 不需要登录即可访问的URI资源
-	private static final String[] INHERENT_ESCAPE_URIS = { "/index.jsp",
-			"/index.html", "/login.jsp", "/login/doLogin.html",
-			"/register.jsp", "/register.html", "/board/listBoardTopics-",
-			"/board/listTopicPosts-" };
+	private static final String[] INHERENT_ESCAPE_URIS = {
+	        "/index.jsp", "/index.html",
+			"/register.jsp", "/register.html",
+            "/login.jsp", "/login/doLogin.html",
+            "/board/listBoardTopics-", "/board/listTopicPosts-" };
 
 	// ② 执行过滤
 	public void doFilter(ServletRequest request, ServletResponse response,
@@ -30,11 +35,10 @@ public class ForumFilter implements Filter {
 		if (request != null && request.getAttribute(FILTERED_REQUEST) != null) {
 			chain.doFilter(request, response);
 		} else {
-
 			// ②-2 设置过滤标识，防止一次请求多次过滤
 			request.setAttribute(FILTERED_REQUEST, Boolean.TRUE);
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
-			User userContext = getSessionUser(httpRequest);
+			User userContext = this.getSessionUser(httpRequest);
 
 			// ②-3 用户未登录, 且当前URI资源需要登录才能访问
 			if (userContext == null
@@ -48,16 +52,18 @@ public class ForumFilter implements Filter {
 				httpRequest.getSession().setAttribute(LOGIN_TO_URL, toUrl);
 
 				// ②-5转发到登录页面
-				request.getRequestDispatcher("/login.jsp").forward(request,
-						response);
+                // 将model(request/response) 及 View(/login.jsp)传回给ispatcherServlet
+                // 然后由他完成解析及渲染 得到login.html返回给客户端
+				request.getRequestDispatcher("/login.jsp").forward(request, response);
 				return;
 			}
 			chain.doFilter(request, response);
 		}
 	}
 
-	public void init(FilterConfig filterConfig) throws ServletException {
-	}
+
+
+
    /**
     * 当前URI资源是否需要登录才能访问
     * @param requestURI
@@ -66,8 +72,9 @@ public class ForumFilter implements Filter {
     */
 	private boolean isURILogin(String requestURI, HttpServletRequest request) {
 		if (request.getContextPath().equalsIgnoreCase(requestURI)
-				|| (request.getContextPath() + "/").equalsIgnoreCase(requestURI))
-			return true;
+				|| (request.getContextPath() + "/").equalsIgnoreCase(requestURI)){
+            return true;
+        }
 		for (String uri : INHERENT_ESCAPE_URIS) {
 			if (requestURI != null && requestURI.indexOf(uri) >= 0) {
 				return true;
@@ -76,10 +83,22 @@ public class ForumFilter implements Filter {
 		return false;
 	}
 
+    /**
+     * 注意这个方法在baseController里有
+     * 但是此过滤器并没有继承baseController
+     * 所以需要自己写一个
+     * @param request
+     * @return
+     */
 	protected User getSessionUser(HttpServletRequest request) {
 		return (User) request.getSession().getAttribute(USER_CONTEXT);
 	}
 
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
 	public void destroy() {
-	}
+
+    }
 }

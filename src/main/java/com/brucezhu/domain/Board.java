@@ -17,8 +17,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Table(name = "t_board")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Board extends BaseDomain {
 
 	@Id
@@ -77,7 +77,4 @@ public class Board extends BaseDomain {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-
-    
-
 }

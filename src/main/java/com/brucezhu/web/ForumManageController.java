@@ -15,20 +15,18 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 /**
- *   论坛管理，这部分功能由论坛管理员操作，包括：创建论坛版块、指定论坛版块管理员、
- * 用户锁定/解锁。
+ * 论坛管理，这部分功能由论坛管理员操作，
+ * 包括：创建论坛版块、指定论坛版块管理员、用户锁定/解锁。
  */
 @Controller
 public class ForumManageController extends BaseController {
 	private ForumService forumService;
-
 	private UserService userService;
 
 	@Autowired
 	public void setForumService(ForumService forumService) {
 		this.forumService = forumService;
 	}
-
 	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -48,7 +46,7 @@ public class ForumManageController extends BaseController {
 	}
 
 	/**
-	 *  添加一个主题帖
+	 *  添加一个论坛板块
 	 * @return
 	 */
 	@RequestMapping(value = "/forum/addBoardPage", method = RequestMethod.GET)
@@ -57,7 +55,7 @@ public class ForumManageController extends BaseController {
 	}
 
 	/**
-	 * 添加一个主题帖
+	 * 添加一个论坛板块
 	 * @param board
 	 * @return
 	 */
@@ -65,6 +63,19 @@ public class ForumManageController extends BaseController {
 	public String addBoard(Board board) {
 		forumService.addBoard(board);
 		return "/addBoardSuccess";
+	}
+
+	/**
+	 * 删除版块
+	 */
+	@RequestMapping(value = "/board/removeBoard", method = RequestMethod.GET)
+	public String removeBoard(@RequestParam("boardIds") String boardIds) {
+		String[] arrIds = boardIds.split(",");
+		for (int i = 0; i < arrIds.length; i++) {
+			forumService.removeBoard(new Integer(arrIds[i]));
+		}
+		String targetUrl = "/index.html";
+		return "redirect:"+targetUrl;
 	}
 
 	/**

@@ -2,9 +2,12 @@ package com.brucezhu.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.util.Assert;
 import com.brucezhu.cons.CommonConstant;
 import com.brucezhu.domain.User;
+
+import java.util.logging.Logger;
 
 /**
  * 所有Controller的基类
@@ -14,7 +17,6 @@ public class BaseController {
 
 	/**
 	 * 获取保存在Session中的用户对象
-	 * 
 	 * @param request
 	 * @return
 	 */
@@ -36,17 +38,15 @@ public class BaseController {
 
 	/**
 	 * 获取基于应用程序的url绝对路径
-	 * 
 	 * @param request
-	 * @param url
-	 *            以"/"打头的URL地址
+	 * @param url 以"/"打头的URL地址
 	 * @return 基于应用程序的url绝对路径
 	 */
 	public final String getAppbaseUrl(HttpServletRequest request, String url) {
 		Assert.hasLength(url, "url不能为空");
 		Assert.isTrue(url.startsWith("/"), "必须以/打头");
+		System.out.println("=====app绝对路径" + request.getContextPath());
+		System.out.println("传进来的url ======" + url);
 		return request.getContextPath() + url;
 	}
-	
-	
 }

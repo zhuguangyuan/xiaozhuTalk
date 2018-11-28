@@ -14,11 +14,11 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
- *   论坛管理，这部分功能由论坛管理员操作，包括：创建论坛版块、指定论坛版块管理员、
- * 用户锁定/解锁。
+ * 论坛管理，这部分功能由论坛管理员操作，
+ * 包括：创建论坛版块、指定论坛版块管理员、用户锁定/解锁。
  */
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/login") // 到/login的请求由此控制器处理
 public class LoginController extends BaseController {
 
 	private UserService userService;
@@ -52,12 +52,17 @@ public class LoginController extends BaseController {
 			setSessionUser(request,dbUser);
 			String toUrl = (String)request.getSession().getAttribute(CommonConstant.LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
+
 			//如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
 			if(StringUtils.isEmpty(toUrl)){
 				toUrl = "/index.html";
 			}
+			// 注意这里的redirect其实就是servlet的redirect(客户端url会改变)
 			mav.setViewName("redirect:"+toUrl);
 		}
+
+		// 这里返回给DispatcherServlet,由他进行解析得到真正的视图(xxx.jsp),
+		// 然后用视图对model里的数据进行渲染,从而得到html/xml/json/图片等等 返回给客户端
 		return mav;
 	}
 
@@ -69,7 +74,9 @@ public class LoginController extends BaseController {
 	@RequestMapping("/doLogout")
 	public String logout(HttpSession session) {
 		session.removeAttribute(CommonConstant.USER_CONTEXT);
+
+		// 注意此处返回的是一个String
+		// DispatcherServlet会将其解析成一个ModelAndView
 		return "forward:/index.jsp";
 	}
-
 }

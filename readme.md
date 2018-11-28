@@ -1,0 +1,21 @@
+- 小猪论坛
+    - 数据库创建文件schema
+    - java源代码
+        - dao数据持久层,负责与数据库的增删改查交互
+            - domain 实体对象,通过jpa注解与数据库表对应
+                - board - topic - post
+                - user
+        - service服务层
+            - 调用dao层的函数实现对应用层提供的API
+        - web应用层
+            - 采用SpringMVC模式开发
+            - 调用服务层接口处理并生成ModelAndView,返回给DispatcherServlet
+                - DispatcherServlet解析逻辑视图名得到实际的View(xxx.jsp),然后jsp容器执行此jsp文件,生成html/json等结果
+                    - jsp被转换为servlet
+                        -servlet重定向
+                            - forward 服务器内部重定向,客户端地址栏url不变
+                            - redirect 客户端重定向,客户端地址栏url改变
+                            - 使用Spring MVC通常是使用ModelAndView用来返回视图。
+                                -ModelAndView其实也是支持Servlet中的两种重定向方式
+                - 生成的结果包装在响应报文中返回给客户端
+            - View集合 在webapp目录下的jsp文件夹

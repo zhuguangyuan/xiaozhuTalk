@@ -3,10 +3,12 @@ CREATE DATABASE sampledb DEFAULT CHARACTER SET utf8;
 USE sampledb;
 
 
-/*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016-10-3 0:34:13                             */
-/*==============================================================*/
+/*==========================================================================*/
+/* DBMS name:      MySQL 8.0                                                */
+/* Created on:     2018-11-28 13:34:13                                      */
+/* 登录mysql: mysql -uroot -p123456                                          */
+/* 执行本脚本: source ~/Center_code/xiaozhuTalk/schema/sampledb.sql;          */
+/*==========================================================================*/
 
 
 drop table if exists t_board;
@@ -34,12 +36,12 @@ CREATE TABLE `t_board` (
 # Dumping data for table t_board
 #
 
-INSERT INTO `t_board` VALUES (1,'SpringMVC','Spring 框架提供了构建 Web 应用程序的全功能 MVC 模块\r\n',8);
-INSERT INTO `t_board` VALUES (2,'\r\nSpring Boot','简化新Spring应用的初始搭建以及开发过程，让我们一起来深入这个领域吧',0);
-INSERT INTO `t_board` VALUES (3,'Spring 事务管理','本板块将讨论 Spring 庞杂而强大的事务功能,包括编程式事务和声明式事务 ',0);
-INSERT INTO `t_board` VALUES (4,' IOC和AOP ','IOC和AOP讨论板块',3);
-INSERT INTO `t_board` VALUES (7,'dddddddddddd','ddddddddddddddddddddddddddddddd',0);
-INSERT INTO `t_board` VALUES (8,'SpringMVC','SpringMVC经验~~',0);
+INSERT INTO `t_board` VALUES (1,'web前端','web前端开发\r\n',8);
+INSERT INTO `t_board` VALUES (2,'\r\nweb网络传输','TCP/IP协议及私有协议扩展',0);
+INSERT INTO `t_board` VALUES (3,'web服务端','web服务端相关开发技术',0);
+INSERT INTO `t_board` VALUES (4,' 数据库 ','关系型数据库及NoSQL',3);
+INSERT INTO `t_board` VALUES (7,'架构','大型网站架构技术概览',0);
+INSERT INTO `t_board` VALUES (8,'web安全','web全栈安全',0);
 
 #
 # Source for table t_board_manager
@@ -102,12 +104,15 @@ INSERT INTO `t_post` VALUES (1,1,1,1,1,'SpringMVC','Spring Web MVC是一种基�
 INSERT INTO `t_post` VALUES (2,1,2,1,1,'配置\r\详解','谁能告诉我SpringMVC的详细配置呢','2016-03-07');
 INSERT INTO `t_post` VALUES (3,1,3,1,1,'test3','http://localhost/forum/boardManage.do?method=addTopicPage&boardId=1','2016-03-16');
 INSERT INTO `t_post` VALUES (4,1,4,1,1,'test5','http://localhost/forum/boardManage.do?method=addTopicPage&boardId=1','2016-03-16');
+
 INSERT INTO `t_post` VALUES (5,4,5,1,1,'AOP背后的故事','AOP背后的故事\r\n','2016-04-16');
 INSERT INTO `t_post` VALUES (6,0,5,1,2,'铁杵磨成针','铁杵磨成针............\r\n','2016-04-16');
 INSERT INTO `t_post` VALUES (7,4,6,1,1,'IOC的原理一','IOC的原理深入讲解\r\n','2016-04-16');
 INSERT INTO `t_post` VALUES (8,4,7,1,1,'IOC的原理二','IOC的原理深入讲解','2016-04-16');
+
 INSERT INTO `t_post` VALUES (14,5,14,1,1,'d','dddddddddddddd','2016-04-12');
 INSERT INTO `t_post` VALUES (15,5,15,1,1,'dad','sdfffffffffffffffffff','2016-04-12');
+
 INSERT INTO `t_post` VALUES (20,1,20,1,1,'测试。。。。','测试。。。。','2016-04-17');
 INSERT INTO `t_post` VALUES (21,1,21,1,1,'测试。。。。','测试。。。。','2016-04-17');
 INSERT INTO `t_post` VALUES (22,1,22,1,1,'SpringMVC集成','SpringMVC集成！！','2016-04-18');
@@ -172,6 +177,6 @@ CREATE TABLE `t_user` (
 # Dumping data for table t_user
 #
 
-INSERT INTO `t_user` VALUES (1,'tom','1234',2,0,203,NULL,NULL);
-INSERT INTO `t_user` VALUES (2,'john','1234',2,1,10,NULL,NULL);
-INSERT INTO `t_user` VALUES (3,'ggg','123123',1,0,110,NULL,NULL);
+INSERT INTO `t_user` VALUES (1,'zhuguangyuan','12345',2,0,203,NULL,NULL);
+INSERT INTO `t_user` VALUES (2,'brucezhu','12345',2,1,10,NULL,NULL);
+INSERT INTO `t_user` VALUES (3,'xiaozhu','12345',1,0,110,NULL,NULL);

@@ -18,9 +18,7 @@ import com.brucezhu.service.UserService;
  */
 @Controller                   
 public class RegisterController extends BaseController {
-	/**
-	 * 自动注入
-	 */
+
 	private UserService userService;
 
 	@Autowired
@@ -47,5 +45,4 @@ public class RegisterController extends BaseController {
 		setSessionUser(request,user);
 		return view;
 	}
-	
 }
