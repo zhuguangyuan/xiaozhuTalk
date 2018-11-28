@@ -68,7 +68,7 @@ public class ForumManageController extends BaseController {
 	/**
 	 * 删除版块
 	 */
-	@RequestMapping(value = "/board/removeBoard", method = RequestMethod.GET)
+	@RequestMapping(value = "/forum/removeBoard", method = RequestMethod.GET)
 	public String removeBoard(@RequestParam("boardIds") String boardIds) {
 		String[] arrIds = boardIds.split(",");
 		for (int i = 0; i < arrIds.length; i++) {

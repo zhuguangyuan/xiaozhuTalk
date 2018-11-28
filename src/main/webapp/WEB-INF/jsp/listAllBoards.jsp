@@ -71,7 +71,7 @@
                 function deleteBoards(){
                    var ids = getSelectedBoardIds();
                    if(ids){
-                      var url = "<c:url value="/board/removeboard.html"/>?boardIds="+ids+"";
+                      var url = "<c:url value="/forum/removeBoard.html"/>?boardIds="+ids+"";
                       //alert(url);
                       location.href = url;
                    }

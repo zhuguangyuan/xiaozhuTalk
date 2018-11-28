@@ -9,7 +9,7 @@
 </head>
 <body>
 <%@ include file="includeTop.jsp" %>
-<form action="<c:url value="/forum/setBoardManager.html" />" method="post" >
+<form action="<c:url value="/forum/setBoardManager.html"/>" method="post" >
 <table border="1px" width="60%">
 	<tr>
 		<td width="20%">论坛模块</td>

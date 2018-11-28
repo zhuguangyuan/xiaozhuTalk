@@ -34,7 +34,7 @@
 	</head>
 	<body>
 		<%@ include file="includeTop.jsp" %>
-		<form action="<c:url value="/form/addBoard.html"/>" _method="post" onsubmit="return mySubmit()">
+		<form action="<c:url value="/forum/addBoard.html"/>" method="post" onsubmit="return mySubmit()">
 			<table border="1px"  width="100%">
 				<tr>
 					<td width="20%">版块名称</td>
@@ -50,7 +50,6 @@
 					<td colspan="2">
 					   <input type="submit" value="保存">
 					   <input type="reset" value="重置">
-					   <input type="hidden" name="_method" value="PUT">
 					</td>
 				</tr>
 			</table>
