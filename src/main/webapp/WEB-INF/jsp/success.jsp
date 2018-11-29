@@ -6,7 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>操作成功</title>
 		<script language=javascript>
-		   setTimeout("window.location.href='/forum/index.html'",180)
+		   setTimeout("window.location.href='index.html'",180)
 		</script>
 	</head>
 	<body>

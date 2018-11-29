@@ -1,6 +1,7 @@
 package com.brucezhu.web;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,7 +19,9 @@ import com.brucezhu.domain.User;
  * 并将此请求跳转到登录界面
  */
 public class ForumFilter implements Filter {
-	private static final String FILTERED_REQUEST = "@@session_context_filtered_request";
+    static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger( ForumFilter.class.getName () ) ;
+
+    private static final String FILTERED_REQUEST = "@@session_context_filtered_request";
 
 	// ① 不需要登录即可访问的URI资源
 	private static final String[] INHERENT_ESCAPE_URIS = {
@@ -30,6 +33,10 @@ public class ForumFilter implements Filter {
 	// ② 执行过滤
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		if(request != null){
+			HttpServletRequest httpRequest1 = (HttpServletRequest) request;
+			logger.error("\n\n=外部===" + httpRequest1.getRequestURI());
+		}
 
 		// ②-1 保证该过滤器在一次请求中只被调用一次
 		if (request != null && request.getAttribute(FILTERED_REQUEST) != null) {
@@ -38,7 +45,9 @@ public class ForumFilter implements Filter {
 			// ②-2 设置过滤标识，防止一次请求多次过滤
 			request.setAttribute(FILTERED_REQUEST, Boolean.TRUE);
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
-			User userContext = this.getSessionUser(httpRequest);
+//            logger.error("\n\n====" + httpRequest.getRequestURI());
+
+            User userContext = this.getSessionUser(httpRequest);
 
 			// ②-3 用户未登录, 且当前URI资源需要登录才能访问
 			if (userContext == null

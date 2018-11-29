@@ -34,6 +34,12 @@ public class ForumManageController extends BaseController {
 
 	/**
 	 * 列出所有的论坛模块
+	 * 1.若浏览器中直接输入baseURL/index.html将会被映射到此函数进行处理
+	 * 2.若浏览器中直接输入baseURL,不指定具体html,则根据web.xml中的配置跳转到index.jsp,
+	 * 	然后index.jsp在jsp容器中执行后生成index.html返回给浏览器,浏览器执行里边的JavaScript,
+	 * 	window.location.href=" <c:url value="/index.html"/>";
+	 * 	重新发送一条请求baseURL/index.html的请求,继而走1的步骤
+	 * 若浏览器中直接输入baseURL/index.jsp,则index.jsp将会被执行,下序步骤和2相似.
 	 * @return
 	 */
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -49,7 +55,7 @@ public class ForumManageController extends BaseController {
 	 *  添加一个论坛板块
 	 * @return
 	 */
-	@RequestMapping(value = "/forum/addBoardPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/addBoardPage", method = RequestMethod.GET)
 	public String addBoardPage() {
 		return "/addBoard";
 	}
@@ -59,7 +65,7 @@ public class ForumManageController extends BaseController {
 	 * @param board
 	 * @return
 	 */
-	@RequestMapping(value = "/forum/addBoard", method = RequestMethod.POST)
+	@RequestMapping(value = "/addBoard", method = RequestMethod.POST)
 	public String addBoard(Board board) {
 		forumService.addBoard(board);
 		return "/addBoardSuccess";
@@ -68,7 +74,7 @@ public class ForumManageController extends BaseController {
 	/**
 	 * 删除版块
 	 */
-	@RequestMapping(value = "/forum/removeBoard", method = RequestMethod.GET)
+	@RequestMapping(value = "/removeBoard", method = RequestMethod.GET)
 	public String removeBoard(@RequestParam("boardIds") String boardIds) {
 		String[] arrIds = boardIds.split(",");
 		for (int i = 0; i < arrIds.length; i++) {
@@ -82,7 +88,7 @@ public class ForumManageController extends BaseController {
 	 * 指定论坛管理员的页面
 	 * @return
 	 */
-	@RequestMapping(value = "/forum/setBoardManagerPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/setBoardManagerPage", method = RequestMethod.GET)
 	public ModelAndView setBoardManagerPage() {
 		ModelAndView view =new ModelAndView();
 		List<Board> boards = forumService.getAllBoards();
@@ -97,7 +103,7 @@ public class ForumManageController extends BaseController {
      * 设置版块管理
      * @return
      */
-	@RequestMapping(value = "/forum/setBoardManager", method = RequestMethod.POST)
+	@RequestMapping(value = "/setBoardManager", method = RequestMethod.POST)
 	public ModelAndView setBoardManager(@RequestParam("userName") String userName
 			,@RequestParam("boardId") String boardId) {
 		ModelAndView view =new ModelAndView();
@@ -119,7 +125,7 @@ public class ForumManageController extends BaseController {
 	 * 用户锁定及解锁管理页面
 	 * @return
 	 */
-	@RequestMapping(value = "/forum/userLockManagePage", method = RequestMethod.GET)
+	@RequestMapping(value = "/userLockManagePage", method = RequestMethod.GET)
 	public ModelAndView userLockManagePage() {
 		ModelAndView view =new ModelAndView();
 		List<User> users = userService.getAllUsers();
@@ -132,7 +138,7 @@ public class ForumManageController extends BaseController {
 	 * 用户锁定及解锁设定
 	 * @return
 	 */
-	@RequestMapping(value = "/forum/userLockManage", method = RequestMethod.POST)
+	@RequestMapping(value = "/userLockManage", method = RequestMethod.POST)
 	public ModelAndView userLockManage(@RequestParam("userName") String userName
 			,@RequestParam("locked") String locked) {
 		ModelAndView view =new ModelAndView();

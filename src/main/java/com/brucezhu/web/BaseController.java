@@ -45,8 +45,6 @@ public class BaseController {
 	public final String getAppbaseUrl(HttpServletRequest request, String url) {
 		Assert.hasLength(url, "url不能为空");
 		Assert.isTrue(url.startsWith("/"), "必须以/打头");
-		System.out.println("=====app绝对路径" + request.getContextPath());
-		System.out.println("传进来的url ======" + url);
 		return request.getContextPath() + url;
 	}
 }

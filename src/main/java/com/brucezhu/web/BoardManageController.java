@@ -28,6 +28,7 @@ import java.util.Date;
  * 表主题帖、回复帖子、删除帖子、设置精华帖子等操作。
  */
 @Controller
+@RequestMapping("/board") // 到/login的请求由此控制器处理
 public class BoardManageController extends BaseController {
 
 	private ForumService forumService;
@@ -42,7 +43,7 @@ public class BoardManageController extends BaseController {
 	 * @param boardId
 	 * @return
 	 */
-	@RequestMapping(value = "/board/listBoardTopics-{boardId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/listBoardTopics-{boardId}", method = RequestMethod.GET)
 	public ModelAndView listBoardTopics(@PathVariable Integer boardId,@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 		ModelAndView view =new ModelAndView();
 		Board board = forumService.getBoardById(boardId);
@@ -60,7 +61,7 @@ public class BoardManageController extends BaseController {
 	 * @param boardId
 	 * @return
 	 */
-	@RequestMapping(value = "/board/addTopicPage-{boardId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/addTopicPage-{boardId}", method = RequestMethod.GET)
 	public ModelAndView addTopicPage(@PathVariable Integer boardId) {
 		ModelAndView view =new ModelAndView();
 		view.addObject("boardId", boardId);
@@ -74,7 +75,7 @@ public class BoardManageController extends BaseController {
 	 * @param topic
 	 * @return
 	 */
-	@RequestMapping(value = "/board/addTopic", method = RequestMethod.POST)
+	@RequestMapping(value = "/addTopic", method = RequestMethod.POST)
 	public String addTopic(HttpServletRequest request,Topic topic) {
 		User user = getSessionUser(request);
 		topic.setUser(user);
@@ -92,7 +93,7 @@ public class BoardManageController extends BaseController {
 	 * @param topicId
 	 * @return
 	 */
-	@RequestMapping(value = "/board/listTopicPosts-{topicId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/listTopicPosts-{topicId}", method = RequestMethod.GET)
 	public ModelAndView listTopicPosts(@PathVariable Integer topicId,@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 		ModelAndView view =new ModelAndView();
 		Topic topic = forumService.getTopicByTopicId(topicId);
@@ -112,7 +113,7 @@ public class BoardManageController extends BaseController {
 	 * @param post
 	 * @return
 	 */
-	@RequestMapping(value = "/board/addPost")
+	@RequestMapping(value = "/addPost")
 	public String addPost(HttpServletRequest request, Post post) {
 		post.setCreateTime(new Date());
 		post.setUser(getSessionUser(request));
@@ -131,7 +132,7 @@ public class BoardManageController extends BaseController {
 	/**
 	 * 删除主题
 	 */
-	@RequestMapping(value = "/board/removeTopic", method = RequestMethod.GET)
+	@RequestMapping(value = "/removeTopic", method = RequestMethod.GET)
 	public String removeTopic(@RequestParam("topicIds") String topicIds,@RequestParam("boardId") String boardId) {
 		String[] arrIds = topicIds.split(",");
 		for (int i = 0; i < arrIds.length; i++) {
@@ -144,7 +145,7 @@ public class BoardManageController extends BaseController {
 	/**
 	 * 设置精华帖
 	 */
-	@RequestMapping(value = "/board/makeDigestTopic", method = RequestMethod.GET)
+	@RequestMapping(value = "/makeDigestTopic", method = RequestMethod.GET)
 	public String makeDigestTopic(@RequestParam("topicIds") String topicIds,@RequestParam("boardId") String boardId) {
 		String[] arrIds = topicIds.split(",");
 		for (int i = 0; i < arrIds.length; i++) {

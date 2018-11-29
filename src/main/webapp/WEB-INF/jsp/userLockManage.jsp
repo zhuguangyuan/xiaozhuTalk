@@ -8,7 +8,8 @@
 </head>
 <body>
 <%@ include file="includeTop.jsp" %>
-<form action="${context}/forum/userLockManage.html" method="post" >
+<!--form action="${context}/forum/userLockManage.html" method="post" -->
+<form action="userLockManage.html" method="post" >
 <table border="1px" width="100%">
 	<tr>
 		<td width="20%">用户</td>
